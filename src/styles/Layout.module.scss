@@ -1,0 +1,7 @@
+ .layout {
+    @apply  flex flex-col gap-7 w-full h-screen pt-20
+} 
+
+.layout h2 {
+    @apply text-3xl text-center font-semibold mb-4
+}

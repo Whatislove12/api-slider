@@ -1,0 +1,26 @@
+/* src/tailwind.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+*{
+  @apply box-border
+}
+
+html,
+body,
+#root {
+  @apply m-auto
+
+}
+
+
+#root {
+  @apply bg-white
+}
+
+a {
+  @apply no-underline text-black
+}
+
