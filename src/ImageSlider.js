@@ -1,41 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import styles from "./styles/Image-slider.module.scss";
-import { getImages } from "./request/images";
 import { ContainerSlider } from "./components/ContainerSlider";
 import { Button } from "./components/Button";
-import { ButtonDot } from "./components/ButtonDot";
-import {shuffle} from 'lodash'
-
+import { Slider } from "./components/Slider";
+import { DotsContainer } from "./components/DotsContainer";
+import { SliderWithArrows } from "./components/SliderWithArrows";
 
 const ImageSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [images, setImages] = useState([]);
 
-  const lenghtOfSlider =[];
+  const lenghtOfSlider = [];
   const getNumbers = () => {
-    for(let i=0; i<10;i++)
-    lenghtOfSlider.push(i)
+    for (let i = 0; i < 10; i++) lenghtOfSlider.push(i);
   };
   getNumbers();
 
-  useEffect(() => {
-    getImages()
-      /* .then(shuffle(setImages)) */
-      .then((images) => {
-        const shuffledImages = shuffle(images);
-        setImages(shuffledImages);
-      })
-      .catch((error) => console.log(error));
-  }, []);
-  console.log(images)
- 
-/*   const shuffleImages= shuffle(images)
-  console.log('shuffle array', shuffleImages); */
-
   const leftArrowClick = () => {
     const isFirstSlide = currentIndex === 0;
-    const newIndex = isFirstSlide ? lenghtOfSlider.length - 1 : currentIndex - 1;
+    const newIndex = isFirstSlide
+      ? lenghtOfSlider.length - 1
+      : currentIndex - 1;
     setCurrentIndex(newIndex);
   };
   const rightArrowClick = () => {
@@ -49,24 +33,17 @@ const ImageSlider = () => {
 
   return (
     <ContainerSlider>
-      <div className={styles.slidesWithArrows}>
-      <Button onClick={leftArrowClick} icon = {<FaChevronLeft />} /> 
-        <div className={styles.slideStyles}>
-        {images[currentIndex] ? <img src={images[currentIndex].images[0]} /> : null}
-        {images[currentIndex] && <p className={styles.namePokemon}>{images[currentIndex].name}</p>}
-        </div>
-        <Button onClick={rightArrowClick} icon = {<FaChevronRight />} /> 
-      </div>
-      <div className={styles.dotsContainer}>
-        {lenghtOfSlider.map((slide, slideIndex) => (
-
-          <ButtonDot
-            key={slideIndex}
-            onClick={() => goToSlide(slideIndex)}
-            isActive={slideIndex === currentIndex}
-          />
-        ))}
-      </div>
+      <SliderWithArrows>
+        <Button onClick={leftArrowClick} icon={<FaChevronLeft />} />
+        <Slider imageNumber={currentIndex} />
+        <Button onClick={rightArrowClick} icon={<FaChevronRight />} />
+      </SliderWithArrows>
+      <DotsContainer
+        sliderLenght={lenghtOfSlider}
+        onClick={goToSlide}
+        curIndex={currentIndex}
+        slIndex={setCurrentIndex}
+      />
     </ContainerSlider>
   );
 };

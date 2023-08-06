@@ -9,6 +9,6 @@ export const ButtonDot = ({ isActive, onClick }) => {
         classes += ' opacity-100' 
         else classes += ' opacity-30'
     return (
-    <button onClick={onClick} className={classes}><FaCircle /></button>
+    <button onClick={onClick} className={classes}><FaCircle className="w-3"/></button>
   );
 };
